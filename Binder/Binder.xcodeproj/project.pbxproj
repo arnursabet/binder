@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B4E614B12CE2E3460061AFEF /* Binder */ = {
+		8BBF4B612CEFA17300D93E3A /* Binder */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Binder;
 			sourceTree = "<group>";
@@ -75,7 +75,7 @@
 		B4E614A62CE2E3460061AFEF = {
 			isa = PBXGroup;
 			children = (
-				B4E614B12CE2E3460061AFEF /* Binder */,
+				8BBF4B612CEFA17300D93E3A /* Binder */,
 				B4E614C22CE2E3550061AFEF /* BinderTests */,
 				B4E614CC2CE2E3550061AFEF /* BinderUITests */,
 				B4E614B02CE2E3460061AFEF /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B4E614B12CE2E3460061AFEF /* Binder */,
+				8BBF4B612CEFA17300D93E3A /* Binder */,
 			);
 			name = Binder;
 			packageProductDependencies = (
