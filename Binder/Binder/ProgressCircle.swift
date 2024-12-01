@@ -29,6 +29,7 @@ struct ProgressCircle: View {
                 .foregroundColor(.gray)
     
             
+
         }
         .frame(width: 150, height: 150)
     }
