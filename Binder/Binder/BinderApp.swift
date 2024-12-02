@@ -11,7 +11,8 @@ import SwiftUI
 struct BinderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            BookRecommendationView()
         }
     }
 }

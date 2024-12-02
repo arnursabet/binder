@@ -4,6 +4,7 @@
 //
 //  Created by Iyu Lin on 2024/11/14.
 //
+//still neeed to figure out randomized books
 
 import SwiftUI
 

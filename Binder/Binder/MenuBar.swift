@@ -11,7 +11,7 @@ struct MenuBar: View {
     var body: some View {
         HStack {
             // MyLibrary button
-            NavigationLink(destination: MyLibraryView()) {
+            NavigationLink(destination: LibraryView()) {
                 VStack{
                     Image(systemName: "books.vertical").font(.system(size: 25))
                     Text("My Library")
@@ -34,15 +34,15 @@ struct MenuBar: View {
             }
             Spacer()
             // Logout button
-            NavigationLink(destination: LogoutView()){
-                
-                VStack{
-                    Image(systemName: "rectangle.portrait.and.arrow.forward").font(.system(size: 25))
-                    Text("Logout")
-                        .font(.footnote)
-                }
-                .foregroundColor(.black)
-            }
+//            NavigationLink(destination: LogoutView()){
+//                
+//                VStack{
+//                    Image(systemName: "rectangle.portrait.and.arrow.forward").font(.system(size: 25))
+//                    Text("Logout")
+//                        .font(.footnote)
+//                }
+//                .foregroundColor(.black)
+//            }
             }
             
         
