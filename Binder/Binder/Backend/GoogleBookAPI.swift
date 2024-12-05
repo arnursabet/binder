@@ -7,6 +7,17 @@
 
 import Foundation
 
+struct Secrets {
+    static var googleBooksAPIKey: String {
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dictionary = NSDictionary(contentsOfFile: path),
+              let apiKey = dictionary["GoogleBooksAPIKey"] as? String else {
+            fatalError("Secrets.plist is missing or API key is not set.")
+        }
+        return apiKey
+    }
+}
+
 //Defining a model for book data
 struct BookModel: Codable {
     let title: String
@@ -30,7 +41,7 @@ struct GoogleBooksResponse: Codable {
 }
 
 class GoogleBooksAPI {
-    let apiKey = "AIzaSyC3u7euqPVtZbwamxfL7CKrwNPb5aesUp8" // Replace with your API Key
+    let apiKey = Secrets.googleBooksAPIKey // Replace with your API Key
     
     func fetchBooks(searchTerm: String) async throws -> [BookModel] {
         guard let url = URL(string: "https://www.googleapis.com/books/v1/volumes?q=\(searchTerm)&key=\(apiKey)") else {
