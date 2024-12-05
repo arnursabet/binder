@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var randomBook: BookModel?
+    @State private var errorMessage: String?
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if let book = randomBook {
+                Text(book.title)
+                    .font(.headline)
+                    .padding()
+                
+            }
+            Button("Fetch Random Book") {
+                Task {
+                    do {
+                        let api = GoogleBooksAPI()
+                        randomBook = try await api.fetchRandomBooks()
+                    } catch {
+                        errorMessage = error.localizedDescription
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
