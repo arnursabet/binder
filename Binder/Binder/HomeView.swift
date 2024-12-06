@@ -16,16 +16,13 @@ struct HomeView: View {
                 Spacer()
                 
                 ZStack {
-                    Circle()
-                        .fill(Color("SelectorColor"))
-                        .frame(width: 200, height: 200)
-                    
-                    Image(systemName: "books.vertical")
+                   
+                    Image("binderLogo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 275, height: 275)
                 }
-                .padding(45)
+                .padding(25)
                 
                 VStack(spacing: 15) {
                     Text("EXPLORE")
