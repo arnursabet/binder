@@ -10,13 +10,7 @@
 import SwiftUI
 
 struct LibraryView: View {
-    // Example book data
-    let books = [
-        ("Dune", "dune_cover"), // Replace with actual asset names
-        ("Atomic Habits", "atomic_habits_cover"),
-        ("Yellowface", "yellowface_cover"),
-        ("Harry Potter", "harry_potter_cover")
-    ]
+    @ObservedObject var libraryVM: LibraryViewModel
     
     var body: some View {
         VStack(spacing: 20) {
@@ -31,7 +25,7 @@ struct LibraryView: View {
                     .foregroundColor(.gray)
 //                    .padding(.top, 20)
                 Spacer()
-                Text("\(books.count) books")
+                Text("\(libraryVM.libraryBooks.count) books")
                     .font(.headline)
                     .foregroundColor(.black)
             }
@@ -39,23 +33,39 @@ struct LibraryView: View {
             
             // Book Grid
             ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
-                    ForEach(books, id: \.0) { book in
-                        VStack {
-                            Image(book.1) // Use asset names for book covers
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width:150, height: 200)
-//                                .cornerRadius(10)
-                            
-//                            Text(book.0)
-//                                .font(.caption)
-//                                .multilineTextAlignment(.center)
-//                                .foregroundColor(.black)
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(), spacing: 45), // First column
+                        GridItem(.flexible(), spacing: 45)  // Second column
+                    ],
+                    spacing: 40 // Space between rows
+                ) {
+                    if self.libraryVM.libraryBooks.count > 0 {
+                        ForEach(0..<self.libraryVM.libraryBooks.count, id: \.self) { index in
+                            VStack {
+                                AsyncImage(url: URL(string: self.libraryVM.libraryBooks[index].imageLinks.thumbnail ?? "")) { image in
+                                    image.resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 220)
+                                        .clipped()
+                                        .background(Color.gray.opacity(0.1))
+                                } placeholder: {
+                                    ProgressView()
+                                        .frame(height: 220)
+                                } 
+
+                                Text(self.libraryVM.libraryBooks[index].title) // Assuming books have a title
+                                    .font(.caption)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(.primary)
+                            }
                         }
                     }
                 }
                 .padding()
+            }
+            .onAppear {
+                libraryVM.fetchLibraryBooks()
             }
             
             // Bottom Navigation
@@ -67,9 +77,7 @@ struct LibraryView: View {
 //            .frame(height: 90)
 //            .background(Color("backgroundColor1"))
         }
-//        .background(Color("backgroundColor1").opacity(0.3))
-        .background(Color("backgrondColor1"))
-        .ignoresSafeArea(edges: .bottom)
+        .background(Color("backgrondColor1").opacity(0.3))
     }
 }
 
@@ -91,5 +99,5 @@ struct NavigationButton: View {
 }
 
 #Preview {
-    LibraryView()
+    LibraryView(libraryVM: LibraryViewModel())
 }

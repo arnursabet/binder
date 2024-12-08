@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct MenuBar: View {
+    @StateObject private var libraryVM = LibraryViewModel()
+
     var body: some View {
         HStack {
             // MyLibrary button
 
-            NavigationLink(destination: LibraryView()) {
 
+            NavigationLink(destination: LibraryView(libraryVM: libraryVM)) {
+                
                 VStack{
                     Image(systemName: "book.fill").font(.system(size: 25))
                     Text("My Library")
