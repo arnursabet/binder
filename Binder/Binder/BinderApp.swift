@@ -12,7 +12,8 @@ struct BinderApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView()
-            BookRecommendationView()
+//            BookRecommendationView(libraryVM: libraryVM)
+            TabbarView()
         }
     }
 }
