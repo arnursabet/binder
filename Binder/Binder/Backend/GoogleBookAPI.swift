@@ -23,14 +23,18 @@ struct BookModel: Codable {
     let title: String
     let authors: [String]?
     let description: String?
+    let imageLinks: ImageLinks
 }
-
+struct ImageLinks: Codable {
+    let thumbnail: String?
+}
 struct GoogleBooksResponse: Codable {
     
     struct VolumeInfo: Codable {
         let title: String
         let authors: [String]?
         let description: String?
+        let imageLinks: ImageLinks
     }
     
     struct Item: Codable {
@@ -60,7 +64,7 @@ class GoogleBooksAPI {
         return decodedResponse.items.map {
             BookModel(title: $0.volumeInfo.title,
                       authors: $0.volumeInfo.authors,
-                      description: $0.volumeInfo.description)
+                      description: $0.volumeInfo.description, imageLinks: $0.volumeInfo.imageLinks)
         }
     }
     
