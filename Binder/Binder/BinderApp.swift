@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct BinderApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var body: some Scene {
         WindowGroup {
+            HomeView()
 //            ContentView()
 //            BookRecommendationView(libraryVM: libraryVM)
-            TabbarView()
+            // TabbarView()
         }
     }
 }

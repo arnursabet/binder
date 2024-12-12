@@ -51,7 +51,7 @@ struct BookRecommendationView: View {
     @State private(set) var bookLoadingState = LoadingState.NeverLoaded
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             
             switch bookLoadingState {
             case .Success:
@@ -73,6 +73,7 @@ struct BookRecommendationView: View {
                                                                     .foregroundColor(.gray)
                                     }.buttonStyle(PlainButtonStyle())
                                                         }
+                        Spacer()
                         
                         // Book Image
                         AsyncImage(url: URL(string: currentBook.imageLinks.thumbnail ?? "")) { image in
@@ -83,7 +84,6 @@ struct BookRecommendationView: View {
                         } placeholder: {
                             ProgressView()
                         }
-                        .padding()
                         
                         Spacer()
                         
@@ -94,7 +94,7 @@ struct BookRecommendationView: View {
                                     .renderingMode(.template)
                                     .font(.title)
                                     .foregroundStyle(.yellow)
-                                Text(selectedCategory)
+                                Text((currentBook.authors?.count ?? 0 > 0 ? currentBook.authors?[0] : "") ?? "")
                                     .font(.subheadline)
                                     .bold()
                                 
@@ -104,7 +104,7 @@ struct BookRecommendationView: View {
                                 Image(systemName: "tag.fill")
                                     .font(.title)
                                     .foregroundStyle(.yellow)
-                                Text(currentBook.categories?.joined(separator: ", ") ?? "No Category")
+                                Text(selectedCategory)
                                            .font(.subheadline)
                             }
                             .padding(.horizontal, 20)

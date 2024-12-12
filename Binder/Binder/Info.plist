@@ -2,10 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.823863893392-jokh66elkvacjstvrn5l4gd3ilf6svl4</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>com.googleusercontent.apps.823863893392-jokh66elkvacjstvrn5l4gd3ilf6svl4</string>
+		<string>google</string>
+		<string>com.googleusercontent.apps.823863893392-jokh66elkvacjstvrn5l4gd3ilf6svl4</string>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>New Exception Domain</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>books.google.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>
@@ -15,5 +39,7 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>GIDClientID</key>
+    <string>823863893392-jokh66elkvacjstvrn5l4gd3ilf6svl4.apps.googleusercontent.com</string>
 </dict>
 </plist>
