@@ -14,14 +14,12 @@ struct HomeView: View {
             VStack(spacing: 30) {
                 
                 Spacer()
-                
-                ZStack {
                    
-                    Image("binderLogo")
+                Image("binderLogo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 275, height: 275)
-                }
+                
                 .padding(25)
                 
                 VStack(spacing: 15) {

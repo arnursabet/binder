@@ -41,32 +41,44 @@ enum LoadingState {
     }
 }
 struct BookRecommendationView: View {
+    let selectedCategory: String
     @State private var books: [BookModel] = []
     @State private var currentIndex = 0
     @State private var animateNextBook = false
     @State private var offset: CGFloat = 0
+    @State private var navigateToLibrary = false
     @ObservedObject var libraryVM: LibraryViewModel
     @State private(set) var bookLoadingState = LoadingState.NeverLoaded
     
     var body: some View {
         VStack(spacing: 20) {
+            
             switch bookLoadingState {
             case .Success:
                 if currentIndex < books.count {
                     let currentBook = books[currentIndex]
                     
                     VStack {
+                        HStack {
                         Text("Book Recommendation")
                             .font(.title2)
                             .foregroundColor(.gray)
                             .padding(.top)
-                        Spacer()
+                            Spacer()
+                            
+                            Button(action: {navigateToLibrary = true
+                            }) {
+                                Image(systemName: "folder.circle")
+                                                                    .font(.title)
+                                                                    .foregroundColor(.gray)
+                                    }.buttonStyle(PlainButtonStyle())
+                                                        }
                         
                         // Book Image
                         AsyncImage(url: URL(string: currentBook.imageLinks.thumbnail ?? "")) { image in
                             image.resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(height: 200)
+                                .frame(height: 420)
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                         } placeholder: {
                             ProgressView()
@@ -82,8 +94,7 @@ struct BookRecommendationView: View {
                                     .renderingMode(.template)
                                     .font(.title)
                                     .foregroundStyle(.yellow)
-                                Text((currentBook.authors?.count ?? 0 > 0 ? currentBook.authors?[0] : "") ?? "")
-                                    .underline()
+                                Text(selectedCategory)
                                     .font(.subheadline)
                                     .bold()
                                 
@@ -93,8 +104,8 @@ struct BookRecommendationView: View {
                                 Image(systemName: "tag.fill")
                                     .font(.title)
                                     .foregroundStyle(.yellow)
-                                Text(currentBook.title)
-                                    .font(.subheadline)
+                                Text(currentBook.categories?.joined(separator: ", ") ?? "No Category")
+                                           .font(.subheadline)
                             }
                             .padding(.horizontal, 20)
                             
@@ -127,19 +138,22 @@ struct BookRecommendationView: View {
                                 animateToNextBook()
                             }
                         }) {
-                            Image(systemName: "smiley.fill")
+                            Image(systemName: "heart.circle.fill")
                                 .resizable()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(.green)
+                                .foregroundColor(.red)
                         }
                     }
                     .padding()
+                    
+                    
                 } else {
                     Spacer()
                     Text("No more recommendations!")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                     Spacer()
+                    
                 }
             case .NeverLoaded:
                 ProgressView()
@@ -154,12 +168,16 @@ struct BookRecommendationView: View {
                     .frame(maxWidth: .infinity)
                 Spacer()
             }
+            
+            
+            
         }.onAppear {
             Task {
                 bookLoadingState = .Loading
                 do {
                     let api = GoogleBooksAPI()
-                    self.books = try await api.fetchBooks(searchTerm: "fiction")
+                    self.books = try await api.fetchBooks(searchTerm: "subject:\(selectedCategory)")
+
                     bookLoadingState = .Success
                     currentIndex = 0
                 } catch {
@@ -189,6 +207,7 @@ struct BookRecommendationView: View {
 // Preview
 struct BookRecommendationView_Previews: PreviewProvider {
     static var previews: some View {
-        BookRecommendationView(libraryVM: LibraryViewModel())
+        BookRecommendationView(selectedCategory: "law", // test
+                               libraryVM: LibraryViewModel())
     }
 }
