@@ -50,6 +50,10 @@ struct CategorySelectionView: View {
                         .padding(.leading, 30)
 
                     TextField("...books per month", text: $monthlyGoal)
+                        .keyboardType(.numberPad)
+                        .onChange(of: monthlyGoal) { newValue in
+                                monthlyGoal = newValue.filter { $0.isNumber } 
+                            }
                         .padding()
                         .background(Color("SelectorColor"))
                         .cornerRadius(15)
