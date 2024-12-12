@@ -1,41 +1,31 @@
-//
-//  CategorySelectView.swift
-//  Binder
-//
-//  Created by Iyu Lin on 2024/11/22.
-//
-
 import SwiftUI
 
 struct CategorySelectionView: View {
-    @State private var navigateToProfile = false
-    
+    @State private var navigateToBookRecom = false
     @State private var selectedCategory = "Select"
     @State private var monthlyGoal = ""
-    
 
-    let categories = ["Fiction", "Non-Fiction", "Fantasy", "Commercial", "Biography"]
+    let categories = ["Fiction", "Law", "Language Arts & Disciplines", "Psychology", "History", "Social Science", "Commercial", "Biography", "Literary Collections", "Architecture", "Business & Economics", "Philosophy", "Education", "Cooking", "Photography", "Travel"]
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                
                 Spacer()
-                
-                Text("WELCOME")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color("wordColor"))
-                
-                Spacer()
-                
-                
+
+                // Logo Image
+                Image("binderLogo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 275, height: 275)
+                    .padding(25)
+
+                // Category Selection
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Please select categories")
                         .font(.subheadline)
                         .foregroundColor(Color("wordColor"))
                         .padding(.leading, 30)
-                    
+
                     HStack {
                         Picker("Select", selection: $selectedCategory) {
                             ForEach(categories, id: \.self) { category in
@@ -43,38 +33,40 @@ struct CategorySelectionView: View {
                             }
                         }
                         .pickerStyle(MenuPickerStyle())
-                        
+
                         Spacer()
-                        
-                            .frame(maxWidth: .infinity)
                     }
                     .padding()
                     .background(Color("SelectorColor"))
                     .cornerRadius(15)
                     .padding(.horizontal, 40)
-                    
                 }
-                
+
+                // Monthly Goal Input
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Please set your month goal")
                         .font(.subheadline)
                         .foregroundColor(Color("wordColor"))
                         .padding(.leading, 30)
-                    
+
                     TextField("...books per month", text: $monthlyGoal)
+                        .keyboardType(.numberPad)
+                        .onChange(of: monthlyGoal) { newValue in
+                                monthlyGoal = newValue.filter { $0.isNumber } 
+                            }
                         .padding()
                         .background(Color("SelectorColor"))
                         .cornerRadius(15)
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal, 40)
                 }
-                
+
                 Spacer()
-                
+
+                // Confirm Button
                 Button(action: {
                     print("Category: \(selectedCategory), Goal: \(monthlyGoal)")
-                    navigateToProfile = true
-                    
+                    navigateToBookRecom = true
                 }) {
                     Text("Confirm")
                         .font(.headline)
@@ -85,15 +77,16 @@ struct CategorySelectionView: View {
                         .cornerRadius(25)
                 }
                 .padding(.horizontal, 40)
-                
+                .navigationDestination(isPresented: $navigateToBookRecom) {
+                    // to BookRecommendationView
+                    BookRecommendationView(selectedCategory: selectedCategory, libraryVM: LibraryViewModel())
+                }
+
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color("backgrondColor1").opacity(0.4))
             .ignoresSafeArea()
-            .navigationDestination(isPresented: $navigateToProfile) {
-                ProfileView()
-            }
         }
     }
 }
@@ -103,4 +96,3 @@ struct CategoriesSelectionView_Previews: PreviewProvider {
         CategorySelectionView()
     }
 }
-

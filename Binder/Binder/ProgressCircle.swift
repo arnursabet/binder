@@ -36,7 +36,7 @@ struct ProgressCircle: View {
 }
 struct ProgressCircle_Previews: PreviewProvider {
     static var previews: some View {
-        ProgressCircle(progress: 0.9)
+        ProgressCircle(progress: 0.9) //test
     }
 }
 

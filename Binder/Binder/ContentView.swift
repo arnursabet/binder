@@ -17,8 +17,20 @@ struct ContentView: View {
                 Text(book.title)
                     .font(.headline)
                     .padding()
-                
+                if let categories = book.categories {
+                        Text("Categories: \(categories.joined(separator: ", "))")
+                            .font(.subheadline)
+                            .padding()
+                    }
             }
+            
+            if let error = errorMessage {
+                            Text("Error: \(error)")
+                                .foregroundColor(.red)
+                                .padding()
+            }
+            
+            
             Button("Fetch Random Book") {
                 Task {
                     do {

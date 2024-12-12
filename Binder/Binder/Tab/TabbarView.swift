@@ -35,7 +35,7 @@ struct TabbarView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             
-            BookRecommendationView(libraryVM: libraryVM)
+            BookRecommendationView(selectedCategory: "Fiction",libraryVM: libraryVM)
                 .tabItem {
                     Image(systemName: "house.fill")
                     Text(TabItem.home.title)
