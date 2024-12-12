@@ -49,7 +49,7 @@ struct ProfileView: View {
                 
                 Spacer()
                 
-                MenuBar()
+//                MenuBar()
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
